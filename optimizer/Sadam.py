@@ -6,7 +6,7 @@ import pdb
 
 class Sadam(Optimizer):
     """Implements Sadam/Samsgrad algorithm.
-		It has been proposed in `Calibrating the Learning Rate for Adaptive Gradient Methods to Improve Generalization Performance`_.
+		It has been proposed in `Calibrating the Learning Rate for Adaptive Gradient Methods to Improve Generalization Performance`.
         params (iterable): iterable of parameters to optimize or dicts defining
             parameter groups
         lr (float, optional): learning rate (default: 1e-1)
@@ -18,12 +18,12 @@ class Sadam(Optimizer):
         partial (float, optional): partially adaptive parameter
     """
 
-    def __init__(self, params, lr=1e-1, betas=(0.9, 0.999), eps=1e-8, weight_decay=0, amsgrad=True, partial = 1/4, transformer='Padam', test_type='Padam', hist=False, grad_transf = 'square', smooth = 50):
+    def __init__(self, params, lr=1e-1, betas=(0.9, 0.999), eps=1e-8, weight_decay=0, amsgrad=True, partial = 1/4, transformer='softplus', grad_transf = 'square', smooth = 50, hist=False):
         if not 0.0 <= betas[0] < 1.0:
             raise ValueError("Invalid beta parameter at index 0: {}".format(betas[0]))
         if not 0.0 <= betas[1] < 1.0:
             raise ValueError("Invalid beta parameter at index 1: {}".format(betas[1]))
-        defaults = dict(lr=lr, betas=betas, eps=eps, weight_decay=weight_decay, amsgrad=amsgrad, partial = partial, transformer=transformer, test_type=test_type, hist=hist, grad_transf = grad_transf , smooth = smooth)
+        defaults = dict(lr=lr, betas=betas, eps=eps, weight_decay=weight_decay, amsgrad=amsgrad, partial = partial, transformer=transformer,  hist=hist, grad_transf = grad_transf , smooth = smooth)
         super(Padam, self).__init__(params, defaults)
 
     def step(self, closure=None):
@@ -83,14 +83,7 @@ class Sadam(Optimizer):
                     grad_tmp = grad.abs()
                     
                     
-                if group['test_type'] ==  "adam_test1":
-                    temp_1 = torch.exp(torch.sign( grad_tmp-exp_avg_sq))
-                    exp_avg_sq.mul_(1).addcmul_(beta2**state['step'], temp_1, grad_tmp)
-                elif group['test_type'] ==  "adam_test2":
-                    #exp_avg_sq.mul_(1).addcmul_(beta2**state['step'], grad, grad)
-                    exp_avg_sq.mul_(1).add_(beta2**state['step']* grad_tmp)
-                else:
-                    exp_avg_sq.mul_(beta2).add_((1 - beta2)*grad_tmp)
+                exp_avg_sq.mul_(beta2).add_((1 - beta2)*grad_tmp)
                     
                     
                     
@@ -123,11 +116,7 @@ class Sadam(Optimizer):
     
                 ################ logger ###########################################################       
                 if group['hist']:    
-                    if group['transformer'] =='log2':
-                        denom_list.append((torch.log2( denom+1) + group['eps']).reshape( 1, -1).squeeze())
-                        denom_inv_list.append( (1/(torch.log2( denom+1) + group['eps'])).reshape( 1, -1).squeeze() )
-                        m_v_eta.append( (-step_size*torch.mul(exp_avg, (1/(torch.log2( denom+1) + group['eps']) ))).reshape( 1, -1).squeeze()  )
-                    elif group['transformer'] =='sigmoid'or  group['transformer'] =='softplus':
+                    if  group['transformer'] =='softplus':
                         denom_list.append(denom.reshape( 1, -1).squeeze())
                         denom_inv_list.append( (1/denom).reshape( 1, -1).squeeze() )
                         m_v_eta.append( (-step_size*torch.mul(exp_avg, (1/denom ))).reshape( 1, -1).squeeze()  )

@@ -158,7 +158,7 @@ def main(dataset= args.dataset, opt = 'sgd', lr = 0.01,r=1, momentum =0.9, augme
         
         testset = torchvision.datasets.CIFAR10(root='../data', train=False, download=True, transform=transform_test)
         testloader = torch.utils.data.DataLoader(testset, batch_size=200, shuffle=False)
-    elif dataset == 'CIFAR100':
+    elif dataset == 'CIFAR100': #not work yet
         trainset = torchvision.datasets.CIFAR100(root='../data/CIFAR100', train=True, download=True, transform=transform_train)
         trainloader = torch.utils.data.DataLoader(trainset, batch_size=args.b, shuffle=True)
         
@@ -197,21 +197,21 @@ def main(dataset= args.dataset, opt = 'sgd', lr = 0.01,r=1, momentum =0.9, augme
     if opt == "Padam":
         if transformer == 'softplus':
             optimizer = Sadam.Sadam(net.parameters(), lr=lr, eps=eps, betas=(0.9, beta2), partial=partial, weight_decay=weight_decay, amsgrad=amsgrad,  transformer= transformer,grad_transf=grad_transf, smooth = smooth, hist= hist)
-            folder_name = '../logs_repeat/'+folder+"/"+str(test_type )+"_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_amsgrad_'+str( amsgrad)+str( transformer)+str( grad_transf)+'_smth_'+str( int(smooth))+'_'+str( r )
-            file_name = '../logs_repeat/'+folder+"/"+str(test_type )+"_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_amsgrad_'+str( amsgrad)+str( transformer)	+str( grad_transf)+'_smth_'+str( int(smooth))+'_'+str( r )
+            folder_name = '../logs/'+folder+"/"+str(test_type )+"_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_amsgrad_'+str( amsgrad)+str( transformer)+str( grad_transf)+'_smth_'+str( int(smooth))+'_'+str( r )
+            file_name = '../logs/'+folder+"/"+str(test_type )+"_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_amsgrad_'+str( amsgrad)+str( transformer)	+str( grad_transf)+'_smth_'+str( int(smooth))+'_'+str( r )
             
         else:        
             optimizer = Sadam.Sadam(net.parameters(), lr=lr, eps=eps, betas=(0.9, beta2), partial=partial, weight_decay=weight_decay, amsgrad=amsgrad,  transformer= transformer,grad_transf=grad_transf, hist= hist)
-            folder_name = '../logs_repeat/'+folder+"/"+str(test_type )+"_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_partial_'+str( partial)+'_amsgrad_'+str( amsgrad)+str( transformer)+str( grad_transf)+'_'+str( r )
-            file_name = '../logs_repeat/'+folder+"/"+str(test_type )+"_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_partial_'+str( partial)+'_amsgrad_'+str( amsgrad)+str( transformer)	+str( grad_transf)+'_'+str( r )
+            folder_name = '../logs/'+folder+"/"+str(test_type )+"_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_partial_'+str( partial)+'_amsgrad_'+str( amsgrad)+str( transformer)+str( grad_transf)+'_'+str( r )
+            file_name = '../logs/'+folder+"/"+str(test_type )+"_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_partial_'+str( partial)+'_amsgrad_'+str( amsgrad)+str( transformer)	+str( grad_transf)+'_'+str( r )
     elif opt == "sgd":
         optimizer = SGD_modified.SGD(net.parameters(), lr = lr, momentum=momentum, weight_decay=weight_decay, hist= hist)
-        folder_name = '../logs_repeat/'+folder+"/"+str(opt )+"_lr"+str(lr)+"_mom"+str( momentum)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_'+str( r )
-        file_name = '../logs_repeat/'+folder+"/"+str(opt )+"_lr"+str(lr)+"_mom"+str( momentum)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_'+str( r )
+        folder_name = '../logs/'+folder+"/"+str(opt )+"_lr"+str(lr)+"_mom"+str( momentum)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_'+str( r )
+        file_name = '../logs/'+folder+"/"+str(opt )+"_lr"+str(lr)+"_mom"+str( momentum)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_'+str( r )
     elif opt == "adabound":
         optimizer = adabound.AdaBound(net.parameters(), lr = lr, weight_decay=weight_decay,  amsbound = amsgrad)
-        folder_name = '../logs_repeat/'+folder+"/"+str(opt )+"_lr"+str(lr)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_amsgrad_'+str( amsgrad)+'_'+str( r )
-        file_name = '../logs_repeat/'+folder+"/"+str(opt )+"_lr"+str(lr)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_amsgrad_'+str( amsgrad)+'_'+str( r )
+        folder_name = '../logs/'+folder+"/"+str(opt )+"_lr"+str(lr)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_amsgrad_'+str( amsgrad)+'_'+str( r )
+        file_name = '../logs/'+folder+"/"+str(opt )+"_lr"+str(lr)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_amsgrad_'+str( amsgrad)+'_'+str( r )
 
     exists = os.path.isfile(file_name+str("_MaxAccuracy"))
     if exists:
@@ -232,17 +232,17 @@ def main(dataset= args.dataset, opt = 'sgd', lr = 0.01,r=1, momentum =0.9, augme
     
     maxAccuracy = 0
     
-    #if args.resume:
-    #    if os.path.isfile(folder_name+'/ckpt.t7'):
-     #       print('=> loading checkpoint "{}"'.format(folder_name+'/ckpt.t7'))
-     #       checkpoint = torch.load(folder_name+'/ckpt.t7')
-     #       args.start_epoch = checkpoint['epoch']
-     #       best_acc = checkpoint['best_acc']
-     #       net.load_state_dict(checkpoint['net'])
-     #       optimizer.load_state_dict(checkpoint['optimizer'])
-     #       print("=> loaded checkpoint '{}' (epoch {})".format(folder_name+'/ckpt.t7', checkpoint['epoch']))
-     #   else:
-     #       print("=> no checkpoint found at '{}'".format(folder_name+'/ckpt.t7'))
+    if args.resume:
+        if os.path.isfile(folder_name+'/ckpt.t7'):
+            print('=> loading checkpoint "{}"'.format(folder_name+'/ckpt.t7'))
+            checkpoint = torch.load(folder_name+'/ckpt.t7')
+            args.start_epoch = checkpoint['epoch']
+            best_acc = checkpoint['best_acc']
+            net.load_state_dict(checkpoint['net'])
+            optimizer.load_state_dict(checkpoint['optimizer'])
+            print("=> loaded checkpoint '{}' (epoch {})".format(folder_name+'/ckpt.t7', checkpoint['epoch']))
+        else:
+            print("=> no checkpoint found at '{}'".format(folder_name+'/ckpt.t7'))
 
      # ================================================================== #
      #                 train model and testing error                      #
