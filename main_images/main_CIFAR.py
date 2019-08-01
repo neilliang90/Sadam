@@ -116,7 +116,7 @@ def test(testloader, net, device, criterion,epoch,folder_name,optimizer):
     return( test_loss/(batch_idx+1), correct/total ) 
 
 
-def main(dataset= args.dataset, opt = 'sgd', lr = 0.01,r=1, momentum =0.9, augment=True,test_type = 'Padam', beta2=args.beta2, epsilon=args.epsilon, partial = args.partial, weight_decay= args.weight_decay, amsgrad=args.amsgrad,  transformer=args.transformer, grad_transf='square', smooth=5, hist = False):
+def main(dataset= args.dataset, opt = 'sgd', lr = 0.01,r=1, momentum =0.9, augment=True, beta2=args.beta2, epsilon=args.epsilon, partial = args.partial, weight_decay= args.weight_decay, amsgrad=args.amsgrad,  transformer=args.transformer, grad_transf='square', smooth=5, hist = False):
     global args
     global best_acc
     # Training settings
@@ -197,13 +197,13 @@ def main(dataset= args.dataset, opt = 'sgd', lr = 0.01,r=1, momentum =0.9, augme
     if opt == "Sadam":
         if transformer == 'softplus':
             optimizer = Sadam.Sadam(net.parameters(), lr=lr, eps=eps, betas=(0.9, beta2), partial=partial, weight_decay=weight_decay, amsgrad=amsgrad,  transformer= transformer,grad_transf=grad_transf, smooth = smooth, hist= hist)
-            folder_name = '../logs/'+folder+"/"+str(test_type )+"_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_amsgrad_'+str( amsgrad)+str( transformer)+str( grad_transf)+'_smth_'+str( int(smooth))+'_'+str( r )
-            file_name = '../logs/'+folder+"/"+str(test_type )+"_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_amsgrad_'+str( amsgrad)+str( transformer)	+str( grad_transf)+'_smth_'+str( int(smooth))+'_'+str( r )
+            folder_name = '../logs/'+folder+"/Sadam_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_amsgrad_'+str( amsgrad)+str( transformer)+str( grad_transf)+'_smth_'+str( int(smooth))+'_'+str( r )
+            file_name = '../logs/'+folder+"/Sadam_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_amsgrad_'+str( amsgrad)+str( transformer)	+str( grad_transf)+'_smth_'+str( int(smooth))+'_'+str( r )
             
         else:        
             optimizer = Sadam.Sadam(net.parameters(), lr=lr, eps=eps, betas=(0.9, beta2), partial=partial, weight_decay=weight_decay, amsgrad=amsgrad,  transformer= transformer,grad_transf=grad_transf, hist= hist)
-            folder_name = '../logs/'+folder+"/"+str(test_type )+"_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_partial_'+str( partial)+'_amsgrad_'+str( amsgrad)+str( transformer)+str( grad_transf)+'_'+str( r )
-            file_name = '../logs/'+folder+"/"+str(test_type )+"_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_partial_'+str( partial)+'_amsgrad_'+str( amsgrad)+str( transformer)	+str( grad_transf)+'_'+str( r )
+            folder_name = '../logs/'+folder+"/Padam_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_partial_'+str( partial)+'_amsgrad_'+str( amsgrad)+str( transformer)+str( grad_transf)+'_'+str( r )
+            file_name = '../logs/'+folder+"/Padam_lr_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_partial_'+str( partial)+'_amsgrad_'+str( amsgrad)+str( transformer)	+str( grad_transf)+'_'+str( r )
     elif opt == "sgd":
         optimizer = SGD_modified.SGD(net.parameters(), lr = lr, momentum=momentum, weight_decay=weight_decay, hist= hist)
         folder_name = '../logs/'+folder+"/"+str(opt )+"_lr"+str(lr)+"_mom"+str( momentum)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_'+str( r )
