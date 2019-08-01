@@ -6,3 +6,4 @@ pytorch
 tensorboard
 
 ## Results:
+![Alt text](Behavior_softplus_function.png?raw=true "Title")
