@@ -2,7 +2,7 @@
 from __future__ import print_function
 import pdb
 import os
-os.chdir("/scratch/gul15103/main_images")
+#os.chdir("/scratch/gul15103/main_images")
 
 import torch
 import torch.nn as nn
@@ -194,7 +194,7 @@ def main(dataset= args.dataset, opt = 'sgd', lr = 0.01,r=1, momentum =0.9, augme
     
     criterion = nn.CrossEntropyLoss()
     eps=epsilon
-    if opt == "Padam":
+    if opt == "Sadam":
         if transformer == 'softplus':
             optimizer = Sadam.Sadam(net.parameters(), lr=lr, eps=eps, betas=(0.9, beta2), partial=partial, weight_decay=weight_decay, amsgrad=amsgrad,  transformer= transformer,grad_transf=grad_transf, smooth = smooth, hist= hist)
             folder_name = '../logs/'+folder+"/"+str(test_type )+"_lr"+str(lr)+'_beta2_'+str(beta2)+'_eps_'+str( eps)+'_'+ str( args.reduceLRtype)+'_wd_'+str( weight_decay)+'_amsgrad_'+str( amsgrad)+str( transformer)+str( grad_transf)+'_smth_'+str( int(smooth))+'_'+str( r )
@@ -380,9 +380,7 @@ if __name__ == '__main__':
                      for transf in [args.transformer]:
                          for amsgrad in amsgrads :
                              print( 'amsgrad_' + str( amsgrad ))
-                             if transf == 'log2' or  transf == 'sigmoid':
-                                  main( opt=opt, lr=lr, r=r, amsgrad=amsgrad, transformer=transf, augment=True,   grad_transf= args.grad_transf, hist=args.hist)
-                             elif transf == 'softplus':
+                             if  transf == 'softplus':
                                  for smooth in [  args.smooth]:
                                      print( smooth)
                                      for grad_transf in [args.grad_transf]:
@@ -390,6 +388,6 @@ if __name__ == '__main__':
                              elif transf == 'Padam':
                                  print('start')
                                  for par in [args.partial]:
-                                     main( opt=opt, lr=lr, r=r, partial=par, amsgrad=amsgrad, transformer=transf, augment=True,    grad_transf=args.grad_transf, hist=args.hist)
+                                     main( opt=opt, lr=lr, r=r, partial=par, amsgrad=amsgrad, transformer=transf, augment=True,   grad_transf=args.grad_transf, hist=args.hist)
      
  
