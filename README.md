@@ -21,7 +21,7 @@ CUDA_VISIBLE_DEVICES=1 python main_CIFAR.py --b 128 --NNtype ResNet20 --optimize
 CUDA_VISIBLE_DEVICES=0 python main_CIFAR10.py --b 128 --NNtype ResNet20 --optimizer adabound --reduceLRtype manual0 --weight_decay 5e-4  --lr 0.01
 
 ### Sadam ( our methods ) 
-CUDA_VISIBLE_DEVICES=1 python main_CIFAR10.py --b 128 --NNtype ResNet20 --optimizer Padam --reduceLRtype manual0 --weight_decay 5e-4  --transformer softplus --smooth 50 --lr 0.01 --partial 0.5 --grad_transf square 
+CUDA_VISIBLE_DEVICES=1 python main_CIFAR10.py --b 128 --NNtype ResNet20 --optimizer Sadam --reduceLRtype manual0 --weight_decay 5e-4  --transformer softplus --smooth 50 --lr 0.01 --partial 0.5 --grad_transf square 
 
 
 ## Results:
