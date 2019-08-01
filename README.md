@@ -25,5 +25,8 @@ CUDA_VISIBLE_DEVICES=1 python main_CIFAR10.py --b 128 --NNtype ResNet20 --optimi
 
 
 ## Results:
+### Anisotrpoic A-LR, which cause "small learning rate dillema" in Adam 
+![Alt text](figure1_adam_over4model.png?raw=true "Title")
+### Performance of softplus function to calibrate A-LR
 ![Alt text](Behavior_softplus_function.png?raw=true "Title")
 
