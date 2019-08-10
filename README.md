@@ -1,5 +1,7 @@
 # Sadam
-This repository contains our pytorch implementation of Sadam in the paper [Calibrating the Learning Rate for Adaptive Gradient Methods to Improve Generalization Performance].
+This repository contains our pytorch implementation of Sadam in the paper [Calibrating the Learning Rate for Adaptive Gradient Methods to Improve Generalization Performance](https://arxiv.org/abs/1908.00700).
+
+( Experiments for CIFAR100 and LSTM are on the way and will release soon! )
 
 ## Prerequisites:
 * pytorch
