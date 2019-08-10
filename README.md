@@ -1,5 +1,7 @@
 # Sadam
-This repository contains our pytorch implementation of Sadam in the paper [Calibrating the Learning Rate for Adaptive Gradient Methods to Improve Generalization Performance].
+This repository contains our pytorch implementation of Sadam in the paper [Calibrating the Learning Rate for Adaptive Gradient Methods to Improve Generalization Performance](https://arxiv.org/abs/1908.00700).
+
+( Experiments for CIFAR100 and LSTM are on the way and will release soon! )
 
 ## Prerequisites:
 * pytorch
@@ -14,7 +16,7 @@ CUDA_VISIBLE_DEVICES=0 python main_CIFAR.py --b 128 --NNtype ResNet20 --optimize
 CUDA_VISIBLE_DEVICES=1 python main_CIFAR.py --b 128 --NNtype ResNet20 --optimizer Sadam --reduceLRtype manual0 --weight_decay 5e-4  --transformer Padam --partial 0.25 --grad_transf square --lr 0.001
 
 ### Padam
-CUDA_VISIBLE_DEVICES=1 python main_CIFAR.py --b 128 --NNtype ResNet20 --optimizer Sadam --reduceLRtype manual0 --weight_decay 5e-4  --transformer Padam --partial 0.0625 --grad_transf square --lr 0.1
+CUDA_VISIBLE_DEVICES=1 python main_CIFAR.py --b 128 --NNtype ResNet20 --optimizer Sadam --reduceLRtype manual0 --weight_decay 5e-4  --transformer Padam --partial 0.125 --grad_transf square --lr 0.1
 
 
 ### adabound
