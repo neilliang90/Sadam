@@ -31,4 +31,6 @@ CUDA_VISIBLE_DEVICES=1 python main_CIFAR.py --b 128 --NNtype ResNet20 --optimize
 ![Alt text](figure1_adam_over4model.png?raw=true "Title")
 ### Performance of softplus function to calibrate A-LR
 ![Alt text](Behavior_softplus_function.png?raw=true "Title")
+### Comparison of different methods
+![Alt text](cifar10.png?raw=true "Title")
 
