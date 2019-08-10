@@ -3,6 +3,9 @@ This repository contains our pytorch implementation of Sadam in the paper [Calib
 
 ( Experiments for CIFAR100 and LSTM are on the way and will release soon! )
 
+## Command Line Arguments:
+--hist True : record information of A-LR
+
 ## Prerequisites:
 * pytorch
 * tensorboard
